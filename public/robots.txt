@@ -1,0 +1,28 @@
+User-agent: *
+Allow: /
+Allow: /login
+Disallow: /api/
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /_next/
+Disallow: /public/
+
+# Specific directives for search engines
+User-agent: Googlebot
+Allow: /
+Disallow: /api/
+Disallow: /admin
+Disallow: /dashboard
+
+User-agent: Bingbot
+Allow: /
+Disallow: /api/
+Disallow: /admin
+Disallow: /dashboard
+
+# Crawl delay and request rate
+Crawl-delay: 1
+Request-rate: 1/10s
+
+# Sitemap location
+Sitemap: https://localhost:3000/sitemap.xml
