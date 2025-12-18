@@ -156,7 +156,8 @@ export function GlobalProvider({ children }: { children: ReactNode }) {
         )
       }
 
-      await fetchTransactions()
+      const newTransaction = await response.json()
+      setTransactions([newTransaction, ...transactions])
     } catch (error) {
       console.error("Error adding transaction:", error)
       throw error
@@ -165,18 +166,7 @@ export function GlobalProvider({ children }: { children: ReactNode }) {
 
   const updateTransaction = async (id: string, transaction: Omit<Transaction, "id" | "userId">) => {
     try {
-      const response = await fetch("/api/transactions", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id, ...transaction }),
-      })
-
-      if (!response.ok) {
-        const errorData = await response.json()
-        throw new Error(errorData.error || "Failed to update transaction")
-      }
-
-      await fetchTransactions()
+      setTransactions(transactions.map((t) => (t.id === id ? { ...t, ...transaction } : t)))
     } catch (error) {
       console.error("Error updating transaction:", error)
       throw error
@@ -185,18 +175,7 @@ export function GlobalProvider({ children }: { children: ReactNode }) {
 
   const deleteTransaction = async (id: string) => {
     try {
-      const response = await fetch("/api/transactions", {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id }),
-      })
-
-      if (!response.ok) {
-        const errorData = await response.json()
-        throw new Error(errorData.error || "Failed to delete transaction")
-      }
-
-      await fetchTransactions()
+      setTransactions(transactions.filter((t) => t.id !== id))
     } catch (error) {
       console.error("Error deleting transaction:", error)
       throw error

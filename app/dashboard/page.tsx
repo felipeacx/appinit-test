@@ -120,6 +120,9 @@ export default function Dashboard() {
               <p className="text-text-secondary">
                 Bienvenido, <span className="font-semibold text-primary">{user?.name}</span>
               </p>
+              <p className="text-sm text-text-secondary mt-1">
+                Rol: <span className="font-semibold text-primary uppercase">{user?.role}</span>
+              </p>
             </div>
             <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
               {canUserPerformAction("manage:users") && (
