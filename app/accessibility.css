@@ -1,0 +1,256 @@
+/**
+ * Utilidades CSS de Accesibilidad WCAG 2.1
+ * Proporciona clases de utilidad accesibles y estilos base
+ */
+
+/* Clase Solo para Lectores de Pantalla - Ocultar visualmente pero mantener accesible para lectores de pantalla */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Focus Visible - Indicador de enfoque mejorado */
+.focus-visible,
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+/* Eliminar el contorno para usuarios de ratón (navegadores modernos) */
+:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+/* Asegurar tamaño de objetivo suficiente (WCAG 2.5.5) */
+button,
+a[href],
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+input[type="checkbox"],
+input[type="radio"],
+select,
+textarea {
+  min-height: 44px;
+  min-width: 44px;
+  padding: 8px 12px;
+}
+
+/* Reducir movimiento para usuarios que lo prefieren */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Asegurar jerarquía adecuada de encabezados */
+h1 {
+  font-size: 2rem;
+  line-height: 2.5rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+h3 {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+h4 {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+h5 {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+h6 {
+  font-size: 0.875rem;
+  line-height: 1.5rem;
+}
+
+/* Ayudantes de contraste de color */
+.high-contrast-text {
+  color: #000;
+}
+
+.high-contrast-text.light-bg {
+  color: #000;
+}
+
+.high-contrast-text.dark-bg {
+  color: #fff;
+}
+
+/* Estilos de enlace - asegurar visibilidad */
+a {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+/* Eliminar subrayado de enlaces solo de iconos si tienen aria-label */
+a[aria-label] svg:only-child {
+  text-decoration: none;
+}
+
+/* Estilos de campo de formulario */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="date"],
+input[type="time"],
+textarea,
+select {
+  font-family: inherit;
+  font-size: 16px; /* Evita zoom en iOS */
+  min-height: 44px;
+  min-width: 44px;
+  padding: 8px 12px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Estados de error */
+input[aria-invalid="true"],
+textarea[aria-invalid="true"],
+select[aria-invalid="true"] {
+  border-color: #dc2626;
+  background-color: #fee2e2;
+}
+
+/* Estados deshabilitados */
+input:disabled,
+textarea:disabled,
+select:disabled,
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Tamaño de texto - asegurar legibilidad */
+body {
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: 0.5px;
+}
+
+/* Asegurar contraste de color suficiente para texto */
+body {
+  color: #1f2937;
+}
+
+.dark-mode body {
+  color: #f3f4f6;
+}
+
+/* Mejorar gestión de enfoque para diálogos modales */
+[role="dialog"]:focus,
+[role="alertdialog"]:focus {
+  outline: none;
+}
+
+/* Accesibilidad de indicador de carga/Spinner */
+.spinner,
+.loader {
+  position: relative;
+}
+
+/* Estilos de imagen */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Asegurar que las etiquetas del formulario sean clicables */
+label {
+  cursor: pointer;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+/* Asegurar que las listas estén debidamente marcadas */
+ul,
+ol {
+  list-style-type: inherit;
+  margin-left: 1.5rem;
+}
+
+/* Bloques de código - asegurar legibilidad */
+code,
+pre {
+  font-family: "Courier New", monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+
+/* Tablas - asegurar estructura */
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th,
+td {
+  border: 1px solid #ccc;
+  padding: 8px 12px;
+  text-align: left;
+}
+
+th {
+  background-color: #f3f4f6;
+  font-weight: bold;
+}
+
+/* Blockquotes */
+blockquote {
+  border-left: 4px solid #3b82f6;
+  padding-left: 1rem;
+  margin-left: 0;
+  font-style: italic;
+}
+
+/* Asegurar contraste de color suficiente en alertas/mensajes */
+[role="alert"],
+[role="status"] {
+  padding: 1rem;
+  border: 2px solid currentColor;
+  border-radius: 4px;
+}
+
+[role="alert"] {
+  background-color: #fee2e2;
+  border-color: #dc2626;
+  color: #991b1b;
+}
+
+[role="status"] {
+  background-color: #dbeafe;
+  border-color: #3b82f6;
+  color: #1e40af;
+}
