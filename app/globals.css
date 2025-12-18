@@ -2,7 +2,7 @@
 @import "./accessibility.css";
 
 :root {
-  /* Light mode colors */
+  /* Colores de modo claro */
   --color-primary: #5C2E7F;
   --color-primary-light: #7D5BA0;
   --color-primary-dark: #3A1650;
