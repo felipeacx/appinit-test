@@ -70,6 +70,24 @@ export function LoginContent() {
     }
   }
 
+  const handleViewerLogin = async () => {
+    setIsLoading(true)
+    setGeneralError("")
+
+    try {
+      await login("usuario@example.com", "password123")
+      router.push("/dashboard")
+    } catch (error) {
+      setGeneralError(
+        error instanceof Error
+          ? error.message
+          : "Error al iniciar sesión como viewer. Por favor, intenta de nuevo."
+      )
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   if (!isMounted) {
     return <div className="min-h-screen" />
   }
@@ -172,6 +190,15 @@ export function LoginContent() {
             ) : (
               "Iniciar Sesión"
             )}
+          </button>
+
+          <button
+            type="button"
+            onClick={handleViewerLogin}
+            disabled={isLoading}
+            className="w-full bg-primary text-white hover:opacity-90 disabled:opacity-70 font-bold py-3 px-4 rounded-lg transition duration-200 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+          >
+            Entrar como Viewer
           </button>
         </form>
 

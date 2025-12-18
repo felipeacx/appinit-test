@@ -193,7 +193,8 @@ export default function Dashboard() {
                 setEditingTransaction(undefined)
                 setIsModalOpen(true)
               }}
-              className="flex-1 sm:flex-none px-6 py-3 bg-success text-white hover:opacity-90 font-bold rounded-lg transition duration-200 shadow-lg hover:shadow-xl flex items-center justify-center gap-2 my-3"
+              disabled={!canUserPerformAction("create:transaction")}
+              className="flex-1 sm:flex-none px-6 py-3 bg-success text-white hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed font-bold rounded-lg transition duration-200 shadow-lg hover:shadow-xl flex items-center justify-center gap-2 my-3"
             >
               <BiPlus className="text-lg" /> Nueva
             </button>
@@ -285,14 +286,16 @@ export default function Dashboard() {
                           <td className="px-4 sm:px-6 py-4 text-sm text-center space-x-2">
                             <button
                               onClick={() => handleEditTransaction(transaction)}
-                              className="text-primary hover:opacity-80 font-semibold transition"
+                              disabled={!canUserPerformAction("update:transaction")}
+                              className="text-primary hover:opacity-80 disabled:opacity-50 disabled:cursor-not-allowed font-semibold transition"
                             >
                               <BiPencil className="inline text-lg" />
                             </button>
 
                             <button
                               onClick={() => handleDeleteTransaction(transaction.id)}
-                              className="text-error hover:opacity-80 font-semibold transition"
+                              disabled={!canUserPerformAction("delete:transaction")}
+                              className="text-error hover:opacity-80 disabled:opacity-50 disabled:cursor-not-allowed font-semibold transition"
                             >
                               <BiTrash className="inline text-lg" />
                             </button>

@@ -45,25 +45,25 @@ function Toast({ notification, onClose }: ToastProps) {
 
   const typeConfig = {
     success: {
-      bg: "bg-success/10",
+      bg: "bg-success/50",
       border: "border-success/20",
       icon: <BiCheck className="text-success text-xl" />,
       iconBg: "bg-success/20",
     },
     error: {
-      bg: "bg-error/10",
+      bg: "bg-error/50",
       border: "border-error/20",
       icon: <BiX className="text-error text-xl" />,
       iconBg: "bg-error/20",
     },
     info: {
-      bg: "bg-primary/10",
+      bg: "bg-primary/50",
       border: "border-primary/20",
       icon: <BiInfoCircle className="text-primary text-xl" />,
       iconBg: "bg-primary/20",
     },
     warning: {
-      bg: "bg-warning/10",
+      bg: "bg-warning/50",
       border: "border-warning/20",
       icon: <MdWarning className="text-warning text-xl" />,
       iconBg: "bg-warning/20",
