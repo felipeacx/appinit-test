@@ -2,12 +2,12 @@ import React from "react"
 import { render, screen } from "@testing-library/react"
 import { ProtectedRoute } from "../../components/ProtectedRoute"
 
-// Mock the useGlobalContext hook
+// Simular el hook useGlobalContext
 jest.mock("../../context/GlobalContext", () => ({
   useGlobalContext: jest.fn(),
 }))
 
-// Mock useRouter
+// Simular useRouter
 jest.mock("next/navigation", () => ({
   useRouter: jest.fn(),
 }))
@@ -25,7 +25,7 @@ describe("ProtectedRoute", () => {
     })
   })
 
-  it("should show loading state when isLoading is true", () => {
+  it("debe mostrar estado de carga cuando isLoading es verdadero", () => {
     ;(useGlobalContext as jest.Mock).mockReturnValue({
       isAuthenticated: false,
       isLoading: true,
@@ -40,7 +40,7 @@ describe("ProtectedRoute", () => {
     expect(screen.getByText("Cargando...")).toBeInTheDocument()
   })
 
-  it("should redirect to login when not authenticated and not loading", () => {
+  it("debe redirigir a inicio de sesión cuando no está autenticado y no está cargando", () => {
     ;(useGlobalContext as jest.Mock).mockReturnValue({
       isAuthenticated: false,
       isLoading: false,
@@ -55,7 +55,7 @@ describe("ProtectedRoute", () => {
     expect(mockPush).toHaveBeenCalledWith("/login")
   })
 
-  it("should render children when authenticated", () => {
+  it("debe renderizar children cuando está autenticado", () => {
     ;(useGlobalContext as jest.Mock).mockReturnValue({
       isAuthenticated: true,
       isLoading: false,
@@ -70,7 +70,7 @@ describe("ProtectedRoute", () => {
     expect(screen.getByText("Protected Content")).toBeInTheDocument()
   })
 
-  it("should not render children when not authenticated", () => {
+  it("no debe renderizar children cuando no está autenticado", () => {
     ;(useGlobalContext as jest.Mock).mockReturnValue({
       isAuthenticated: false,
       isLoading: false,
@@ -85,7 +85,7 @@ describe("ProtectedRoute", () => {
     expect(container.textContent).not.toContain("Protected Content")
   })
 
-  it("should have loading animation element", () => {
+  it("debe tener elemento de animación de carga", () => {
     ;(useGlobalContext as jest.Mock).mockReturnValue({
       isAuthenticated: false,
       isLoading: true,

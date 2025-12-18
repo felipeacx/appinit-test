@@ -2,13 +2,13 @@ import React from "react"
 import { render, screen } from "@testing-library/react"
 import { ClientWrapper } from "../../context/ClientWrapper"
 
-// Mock ToastContainer to avoid complexity
+// Simular ToastContainer para evitar complejidad
 jest.mock("../../components/ToastContainer", () => ({
   ToastContainer: () => <div data-testid="toast-container">Toast Container</div>,
 }))
 
 describe("ClientWrapper", () => {
-  it("should render children", () => {
+  it("debe renderizar children", () => {
     render(
       <ClientWrapper>
         <div data-testid="test-child">Test Content</div>
@@ -19,7 +19,7 @@ describe("ClientWrapper", () => {
     expect(screen.getByText("Test Content")).toBeInTheDocument()
   })
 
-  it("should render main element with id main-content", () => {
+  it("debe renderizar elemento main con id main-content", () => {
     const { container } = render(
       <ClientWrapper>
         <div>Content</div>
@@ -30,7 +30,7 @@ describe("ClientWrapper", () => {
     expect(mainElement).toBeInTheDocument()
   })
 
-  it("should render ToastContainer", () => {
+  it("debe renderizar ToastContainer", () => {
     render(
       <ClientWrapper>
         <div>Content</div>
@@ -40,18 +40,18 @@ describe("ClientWrapper", () => {
     expect(screen.getByTestId("toast-container")).toBeInTheDocument()
   })
 
-  it("should provide GlobalProvider and NotificationProvider", () => {
+  it("debe proporcionar GlobalProvider y NotificationProvider", () => {
     const { container } = render(
       <ClientWrapper>
         <div>Content</div>
       </ClientWrapper>
     )
 
-    // If the providers are working, the child should render
+    // Si los proveedores están funcionando, el hijo debe renderizarse
     expect(container.querySelector("main")).toBeInTheDocument()
   })
 
-  it("should handle multiple children", () => {
+  it("debe manejar múltiples children", () => {
     render(
       <ClientWrapper>
         <div data-testid="child-1">Child 1</div>
@@ -63,7 +63,7 @@ describe("ClientWrapper", () => {
     expect(screen.getByTestId("child-2")).toBeInTheDocument()
   })
 
-  it("should wrap children in providers", () => {
+  it("debe envolver children en proveedores", () => {
     render(
       <ClientWrapper>
         <div>Wrapped Content</div>

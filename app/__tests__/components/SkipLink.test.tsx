@@ -2,7 +2,7 @@ import React from "react"
 import { render, screen } from "@testing-library/react"
 import { SkipLink } from "../../components/SkipLink"
 
-// Mock usePathname
+// Simular usePathname
 jest.mock("next/navigation", () => ({
   usePathname: jest.fn(),
 }))
@@ -14,7 +14,7 @@ describe("SkipLink", () => {
     jest.clearAllMocks()
   })
 
-  it("should render skip link when not on login page", () => {
+  it("debe renderizar enlace de salto cuando no está en página de inicio de sesión", () => {
     ;(usePathname as jest.Mock).mockReturnValue("/dashboard")
 
     render(<SkipLink />)
@@ -22,7 +22,7 @@ describe("SkipLink", () => {
     expect(skipLink).toBeInTheDocument()
   })
 
-  it("should not render when on login page", () => {
+  it("no debe renderizar cuando está en página de inicio de sesión", () => {
     ;(usePathname as jest.Mock).mockReturnValue("/login")
 
     const { container } = render(<SkipLink />)
@@ -30,7 +30,7 @@ describe("SkipLink", () => {
     expect(skipLink).not.toBeInTheDocument()
   })
 
-  it("should have aria-label", () => {
+  it("debe tener aria-label", () => {
     ;(usePathname as jest.Mock).mockReturnValue("/dashboard")
 
     render(<SkipLink />)
@@ -38,7 +38,7 @@ describe("SkipLink", () => {
     expect(skipLink).toHaveAttribute("aria-label")
   })
 
-  it("should have href attribute pointing to main-content", () => {
+  it("debe tener atributo href apuntando a main-content", () => {
     ;(usePathname as jest.Mock).mockReturnValue("/dashboard")
 
     render(<SkipLink />)
@@ -46,7 +46,7 @@ describe("SkipLink", () => {
     expect(skipLink).toHaveAttribute("href", "#main-content")
   })
 
-  it("should have text content", () => {
+  it("debe tener contenido de texto", () => {
     ;(usePathname as jest.Mock).mockReturnValue("/admin")
 
     render(<SkipLink />)
@@ -54,7 +54,7 @@ describe("SkipLink", () => {
     expect(skipLink).toHaveTextContent("Ir al contenido principal")
   })
 
-  it("should have proper CSS classes for fixed positioning", () => {
+  it("debe tener clases CSS apropiadas para posicionamiento fijo", () => {
     ;(usePathname as jest.Mock).mockReturnValue("/")
 
     const { container } = render(<SkipLink />)
@@ -64,7 +64,7 @@ describe("SkipLink", () => {
     expect(skipLink).toHaveClass("left-0")
   })
 
-  it("should have suppressHydrationWarning attribute", () => {
+  it("debe tener atributo suppressHydrationWarning", () => {
     ;(usePathname as jest.Mock).mockReturnValue("/transactions")
 
     const { container } = render(<SkipLink />)
@@ -72,7 +72,7 @@ describe("SkipLink", () => {
     expect(skipLink).toBeDefined()
   })
 
-  it("should render as anchor tag", () => {
+  it("debe renderizar como etiqueta anchor", () => {
     ;(usePathname as jest.Mock).mockReturnValue("/dashboard")
 
     const { container } = render(<SkipLink />)

@@ -2,7 +2,7 @@ import React from "react"
 import { render, screen, waitFor, act } from "@testing-library/react"
 import { GlobalProvider, useGlobalContext } from "../../context/GlobalContext"
 
-// Mock component that uses the context
+// Componente simulado que usa el contexto
 function TestComponent() {
   const context = useGlobalContext()
   return (
@@ -21,14 +21,17 @@ describe("GlobalContext", () => {
   beforeEach(() => {
     localStorage.clear()
     jest.clearAllMocks()
+    global.fetch = jest.fn()
+    jest.spyOn(console, "error").mockImplementation(() => {})
   })
 
   afterEach(() => {
     localStorage.clear()
+    jest.restoreAllMocks()
   })
 
   describe("GlobalProvider", () => {
-    it("should render children", () => {
+    it("debe renderizar children", () => {
       render(
         <GlobalProvider>
           <div data-testid="child">Test Child</div>
@@ -37,7 +40,7 @@ describe("GlobalContext", () => {
       expect(screen.getByTestId("child")).toBeInTheDocument()
     })
 
-    it("should provide initial context", () => {
+    it("debe proporcionar contexto inicial", () => {
       render(
         <GlobalProvider>
           <TestComponent />
@@ -46,7 +49,7 @@ describe("GlobalContext", () => {
       expect(screen.getByTestId("auth-status")).toHaveTextContent("Not authenticated")
     })
 
-    it("should load user from localStorage on mount", async () => {
+    it("debe cargar usuario de localStorage al montaje", async () => {
       const testUser = {
         id: "123",
         email: "test@example.com",
@@ -69,7 +72,7 @@ describe("GlobalContext", () => {
       })
     })
 
-    it("should handle invalid localStorage data gracefully", () => {
+    it("debe manejar datos inválidos de localStorage elegantemente", () => {
       localStorage.setItem("user", "invalid json")
 
       expect(() => {
@@ -83,8 +86,8 @@ describe("GlobalContext", () => {
   })
 
   describe("useGlobalContext", () => {
-    it("should throw error when used outside provider", () => {
-      // Suppress console.error for this test
+    it("debe lanzar error cuando se usa fuera del proveedor", () => {
+      // Suprimir console.error para esta prueba
       const spy = jest.spyOn(console, "error").mockImplementation(() => {})
 
       function InvalidComponent() {
@@ -99,7 +102,7 @@ describe("GlobalContext", () => {
       spy.mockRestore()
     })
 
-    it("should return context when used inside provider", () => {
+    it("debe devolver contexto cuando se usa dentro del proveedor", () => {
       render(
         <GlobalProvider>
           <TestComponent />
@@ -112,7 +115,7 @@ describe("GlobalContext", () => {
   })
 
   describe("GlobalContext methods", () => {
-    it("should have logout function", () => {
+    it("debe tener función logout", () => {
       const testUser = {
         id: "123",
         email: "test@example.com",
@@ -138,7 +141,7 @@ describe("GlobalContext", () => {
       }).not.toThrow()
     })
 
-    it("should initialize with empty transactions", () => {
+    it("debe inicializar con transacciones vacías", () => {
       render(
         <GlobalProvider>
           <TestComponent />
@@ -148,22 +151,22 @@ describe("GlobalContext", () => {
       expect(screen.getByTestId("transactions-count")).toHaveTextContent("0")
     })
 
-    it("should have loading state initially", async () => {
+    it("debe tener estado de carga inicialmente", async () => {
       render(
         <GlobalProvider>
           <TestComponent />
         </GlobalProvider>
       )
 
-      // Component should render even during loading
+      // Componente debe renderizarse incluso durante la carga
       await waitFor(() => {
         expect(screen.getByTestId("auth-status")).toBeInTheDocument()
       })
     })
   })
 
-  describe("Authentication flow", () => {
-    it("should handle missing localStorage user", async () => {
+  describe("Flujo de autenticación", () => {
+    it("debe manejar usuario localStorage faltante", async () => {
       render(
         <GlobalProvider>
           <TestComponent />
@@ -175,7 +178,7 @@ describe("GlobalContext", () => {
       })
     })
 
-    it("should maintain state after mount", async () => {
+    it("debe mantener estado después del montaje", async () => {
       const testUser = {
         id: "456",
         email: "user@test.com",
@@ -197,7 +200,7 @@ describe("GlobalContext", () => {
         expect(screen.getByTestId("user-email")).toHaveTextContent("user@test.com")
       })
 
-      // Rerender should maintain state
+      // Redibujar debe mantener el estado
       rerender(
         <GlobalProvider>
           <TestComponent />
@@ -208,8 +211,8 @@ describe("GlobalContext", () => {
     })
   })
 
-  describe("Data structures", () => {
-    it("should initialize empty arrays for transactions", () => {
+  describe("Estructuras de datos", () => {
+    it("debe inicializar arrays vacíos para transacciones", () => {
       render(
         <GlobalProvider>
           <TestComponent />
@@ -219,7 +222,7 @@ describe("GlobalContext", () => {
       expect(screen.getByTestId("transactions-count")).toHaveTextContent("0")
     })
 
-    it("should initialize user as null", () => {
+    it("debe inicializar usuario como nulo", () => {
       render(
         <GlobalProvider>
           <TestComponent />

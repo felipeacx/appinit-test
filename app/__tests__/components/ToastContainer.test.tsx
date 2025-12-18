@@ -2,7 +2,7 @@ import React from "react"
 import { render, screen } from "@testing-library/react"
 import { ToastContainer } from "../../components/ToastContainer"
 
-// Mock the useNotifications hook
+// Simular el hook useNotifications
 jest.mock("../../context/NotificationContext", () => ({
   useNotifications: jest.fn(),
 }))
@@ -16,7 +16,7 @@ describe("ToastContainer", () => {
     jest.clearAllMocks()
   })
 
-  it("should render container div", () => {
+  it("debe renderizar div contenedor", () => {
     ;(useNotifications as jest.Mock).mockReturnValue({
       notifications: [],
       removeNotification: mockRemoveNotification,
@@ -26,7 +26,7 @@ describe("ToastContainer", () => {
     expect(container.querySelector(".fixed.bottom-4.right-4")).toBeInTheDocument()
   })
 
-  it("should render no toasts when notifications array is empty", () => {
+  it("debe renderizar sin toasts cuando array de notificaciones está vacío", () => {
     ;(useNotifications as jest.Mock).mockReturnValue({
       notifications: [],
       removeNotification: mockRemoveNotification,
@@ -37,7 +37,7 @@ describe("ToastContainer", () => {
     expect(toasts.length).toBe(0)
   })
 
-  it("should render toast for each notification", () => {
+  it("debe renderizar toast para cada notificación", () => {
     const notifications = [
       {
         id: "1",
@@ -66,7 +66,7 @@ describe("ToastContainer", () => {
     expect(screen.getByText("Something went wrong")).toBeInTheDocument()
   })
 
-  it("should render toast with title and message", () => {
+  it("debe renderizar toast con título y mensaje", () => {
     const notifications = [
       {
         id: "1",
@@ -87,7 +87,7 @@ describe("ToastContainer", () => {
     expect(screen.getByText("This is an information message")).toBeInTheDocument()
   })
 
-  it("should render warning notification", () => {
+  it("debe renderizar notificación de advertencia", () => {
     const notifications = [
       {
         id: "1",
@@ -108,7 +108,7 @@ describe("ToastContainer", () => {
     expect(screen.getByText("Be careful")).toBeInTheDocument()
   })
 
-  it("should handle notification with action", () => {
+  it("debe manejar notificación con acción", () => {
     const mockAction = jest.fn()
     const notifications = [
       {
@@ -134,7 +134,7 @@ describe("ToastContainer", () => {
     expect(actionButton).toBeInTheDocument()
   })
 
-  it("should have proper z-index positioning", () => {
+  it("debe tener posicionamiento z-index adecuado", () => {
     ;(useNotifications as jest.Mock).mockReturnValue({
       notifications: [],
       removeNotification: mockRemoveNotification,
@@ -145,7 +145,7 @@ describe("ToastContainer", () => {
     expect(toastContainer).toHaveClass("z-9999")
   })
 
-  it("should have space-y-3 for spacing between toasts", () => {
+  it("debe tener space-y-3 para espaciado entre toasts", () => {
     ;(useNotifications as jest.Mock).mockReturnValue({
       notifications: [],
       removeNotification: mockRemoveNotification,

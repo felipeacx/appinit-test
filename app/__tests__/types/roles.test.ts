@@ -1,14 +1,14 @@
 import { canUserPerform, hasAnyPermission, rolePermissions } from "../../types/roles"
 
 describe("roles", () => {
-  describe("rolePermissions", () => {
-    it("should have all role types defined", () => {
+  describe("permisos por rol", () => {
+    it("debe tener todos los tipos de rol definidos", () => {
       expect(rolePermissions).toHaveProperty("admin")
       expect(rolePermissions).toHaveProperty("user")
       expect(rolePermissions).toHaveProperty("viewer")
     })
 
-    it("should have correct permissions for admin", () => {
+    it("debe tener permisos correctos para admin", () => {
       const adminPermissions = rolePermissions.admin
       expect(adminPermissions).toContain("create:transaction")
       expect(adminPermissions).toContain("read:transaction")
@@ -20,7 +20,7 @@ describe("roles", () => {
       expect(adminPermissions.length).toBe(7)
     })
 
-    it("should have correct permissions for user", () => {
+    it("debe tener permisos correctos para usuario", () => {
       const userPermissions = rolePermissions.user
       expect(userPermissions).toContain("create:transaction")
       expect(userPermissions).toContain("read:transaction")
@@ -32,7 +32,7 @@ describe("roles", () => {
       expect(userPermissions.length).toBe(5)
     })
 
-    it("should have correct permissions for viewer", () => {
+    it("debe tener permisos correctos para visor", () => {
       const viewerPermissions = rolePermissions.viewer
       expect(viewerPermissions).toContain("read:transaction")
       expect(viewerPermissions).not.toContain("create:transaction")
@@ -44,14 +44,14 @@ describe("roles", () => {
   })
 
   describe("canUserPerform", () => {
-    it("should return true for admin with any permission", () => {
+    it("debe devolver verdadero para admin con cualquier permiso", () => {
       expect(canUserPerform("admin", "create:transaction")).toBe(true)
       expect(canUserPerform("admin", "manage:users")).toBe(true)
       expect(canUserPerform("admin", "manage:roles")).toBe(true)
       expect(canUserPerform("admin", "read:transaction")).toBe(true)
     })
 
-    it("should return true for user with transaction permissions", () => {
+    it("debe devolver verdadero para usuario con permisos de transacción", () => {
       expect(canUserPerform("user", "create:transaction")).toBe(true)
       expect(canUserPerform("user", "read:transaction")).toBe(true)
       expect(canUserPerform("user", "update:transaction")).toBe(true)
@@ -59,12 +59,12 @@ describe("roles", () => {
       expect(canUserPerform("user", "share:transaction")).toBe(true)
     })
 
-    it("should return false for user without admin permissions", () => {
+    it("debe devolver falso para usuario sin permisos de admin", () => {
       expect(canUserPerform("user", "manage:users")).toBe(false)
       expect(canUserPerform("user", "manage:roles")).toBe(false)
     })
 
-    it("should return true for viewer only with read permission", () => {
+    it("debe devolver verdadero para visor solo con permiso de lectura", () => {
       expect(canUserPerform("viewer", "read:transaction")).toBe(true)
       expect(canUserPerform("viewer", "create:transaction")).toBe(false)
       expect(canUserPerform("viewer", "update:transaction")).toBe(false)
@@ -72,35 +72,35 @@ describe("roles", () => {
       expect(canUserPerform("viewer", "share:transaction")).toBe(false)
     })
 
-    it("should return false for viewer with any admin permission", () => {
+    it("debe devolver falso para visor con cualquier permiso de admin", () => {
       expect(canUserPerform("viewer", "manage:users")).toBe(false)
       expect(canUserPerform("viewer", "manage:roles")).toBe(false)
     })
   })
 
   describe("hasAnyPermission", () => {
-    it("should return true if user has at least one permission", () => {
+    it("debe devolver verdadero si el usuario tiene al menos un permiso", () => {
       expect(hasAnyPermission("user", ["manage:users", "create:transaction"])).toBe(true)
       expect(hasAnyPermission("admin", ["manage:users"])).toBe(true)
     })
 
-    it("should return false if user has none of the permissions", () => {
+    it("debe devolver falso si el usuario no tiene ninguno de los permisos", () => {
       expect(hasAnyPermission("viewer", ["create:transaction", "update:transaction"])).toBe(false)
       expect(hasAnyPermission("user", ["manage:users", "manage:roles"])).toBe(false)
     })
 
-    it("should return false for empty permissions array", () => {
+    it("debe devolver falso para array de permisos vacío", () => {
       expect(hasAnyPermission("admin", [])).toBe(false)
       expect(hasAnyPermission("user", [])).toBe(false)
     })
 
-    it("should work with single permission in array", () => {
+    it("debe funcionar con un solo permiso en el array", () => {
       expect(hasAnyPermission("user", ["create:transaction"])).toBe(true)
       expect(hasAnyPermission("viewer", ["read:transaction"])).toBe(true)
       expect(hasAnyPermission("viewer", ["create:transaction"])).toBe(false)
     })
 
-    it("admin should have any permission", () => {
+    it("admin debe tener cualquier permiso", () => {
       const allPermissions: Array<
         | "create:transaction"
         | "read:transaction"
